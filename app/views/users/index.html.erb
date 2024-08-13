@@ -37,11 +37,21 @@
         </td>
 <td></td>
 
-        <td>
+<% if current_user != nil %>
+          <td>
           <a href="/users/<%= a_user.id %>">
             Show details
           </a>
+         </td>
+  <% else %>
+   <td>
+          <a href="/users/sign_in">
+            Show details
+          </a>
         </td>
+<% end %>
+
+       
       </tr>
       <% end %>
     </table>
