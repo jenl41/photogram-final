@@ -100,4 +100,5 @@ has_many :followees, through: :followed_users, dependent: :destroy
 
   # This accesses the user through the relationship object.
   has_many :followers, through: :following_users, dependent: :destroy
+
 end

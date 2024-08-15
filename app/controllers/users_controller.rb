@@ -57,4 +57,14 @@ class UsersController < ApplicationController
 
     redirect_to("/users", { :notice => "User deleted successfully."} )
   end
+
+  def feed
+    the_username = params.fetch("user_name")
+    matching_users = User.where({ :username => the_username})
+
+
+    render({ :template => "users/feed" })
+
+  end
+
 end

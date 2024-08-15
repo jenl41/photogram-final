@@ -1,8 +1,8 @@
 <div>
   <div>
+  <%= params %>
     <h1>
-      <%= @the_user.username %>
-    </h1>
+<%= @the_user.username %></h1> 
 
       <dt>
         Private
@@ -11,7 +11,8 @@
         <%= @the_user.private %>
       </dd>
 
-<dt>Followers</dt>
+  <dt>Followers</dt>
+ <%= @followers_count %>
 
 <dt>Following</dt>
 
@@ -20,14 +21,14 @@
         Comments count
       </dt>
       <dd>
-        <%= @the_user.comments_count %>
+        <%= @comments_count %>
       </dd>
 
       <dt>
         Likes count
       </dt>
       <dd>
-        <%= @the_user.likes_count %>
+        <%= @likes_count %>
       </dd>
 
       
@@ -36,21 +37,21 @@
         Username
       </dt>
       <dd>
-        <%= @the_user.username %>
+        <%= @the_username %>
       </dd>
 
       <dt>
         Created at
       </dt>
       <dd>
-        <%= time_ago_in_words(@the_user.created_at) %> ago
+        <%= @created_at %> ago
       </dd>
 
       <dt>
         Updated at
       </dt>
       <dd>
-        <%= time_ago_in_words(@the_user.updated_at) %> ago
+        <%= @updated_at %> ago
       </dd>
     </dl>
   </div>
@@ -65,13 +66,13 @@
       Edit user
     </h2>
 
-    <form action="/modify_user/<%= @the_user.id %>"  method="post" >
+    <form action="/modify_user/<%= @user_id %>"  method="post" >
       <div>
         <label for="comments_count_box">
           Comments count
         </label>
 
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_user.comments_count %>">
+        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @comments_count %>">
       </div>
 
       <div>
@@ -79,11 +80,11 @@
           Likes count
         </label>
 
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_user.likes_count %>">
+        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @likes_count %>">
       </div>
 
       <div>
-        <input type="checkbox" id="private_box" name="query_private" value="1" <%= "checked" if @the_user.private %>>
+        <input type="checkbox" id="private_box" name="query_private" value="1" <%= "checked" if @user_private %>>
 
         <label for="private_box">
             Private
@@ -95,7 +96,7 @@
           Username
         </label>
 
-        <input type="text" id="username_box" name="query_username" value="<%= @the_user.username %>">
+        <input type="text" id="username_box" name="query_username" value="<%= @username %>">
       </div>
 
       <button>
@@ -106,4 +107,52 @@
 </div>
 
 <hr>
-<%= params %>
+
+      <li>
+      <a href="/users">Profile</a>
+      </li>
+
+      <li><a href="/photos">
+          Liked Photos
+        </a>
+      </li>
+
+      <li><a href="/users/feed">
+          Feed
+        </a>
+      </li>
+      <li><a href="/photos">
+          Discover
+        </a>
+      </li>
+#feed table
+<hr>
+<h2>Own photos ( )</h2>
+
+<table border="1">
+<tr>
+<th>Image</th>
+<th>Owner</th>
+<th>Caption</th>
+<th>Posted</th>
+<th>Likes</th>
+<th></th>
+</tr>
+
+
+<%= matching_profile = Photo.where({ :owner_id => @user_id })%>
+<% matching_profile.each do |a_photo|%>
+<tr>
+
+<td><img src="<%= a_photo.image%>"></td>
+<td><%= a_photo.owner_id%></td>
+<td><%= a_photo.caption%></td>
+<td><%= a_photo.created_at%></td>
+<td><%= a_photo.likes_count%></td>
+<td><a href="/photos/<%= a_photo.id%>">Show Details</a></td>
+
+</tr>
+
+<% end %>
+
+</table>
