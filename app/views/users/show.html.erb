@@ -127,32 +127,50 @@
       </li>
 #feed table
 <hr>
-<h2>Own photos ( )</h2>
+<h2>Own photos (<%= @the_user.own_photos.size %> )</h2>
 
 <table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+ <th>
+      Likes
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+<% @the_user.own_photos.each do |a_photo|%>
+
 <tr>
-<th>Image</th>
-<th>Owner</th>
-<th>Caption</th>
-<th>Posted</th>
-<th>Likes</th>
-<th></th>
-</tr>
-
-
-<%= matching_profile = Photo.where({ :owner_id => @user_id })%>
-<% matching_profile.each do |a_photo|%>
-<tr>
-
-<td><img src="<%= a_photo.image%>"></td>
-<td><%= a_photo.owner_id%></td>
-<td><%= a_photo.caption%></td>
-<td><%= a_photo.created_at%></td>
-<td><%= a_photo.likes_count%></td>
-<td><a href="/photos/<%= a_photo.id%>">Show Details</a></td>
+<td><img src="<%= a_photo.image %>"></td>
+<td>
+<%#= User.where({ :id => a_photo.owner_id}).at(0).username %>
+<%= a_photo.poster.username %>
+</td>
+<td><%= a_photo.caption %></td>
+<td><%= a_photo.created_at %></td>
+<td>insert likes count</td>
+<td>
+<a href="/photos">Show details</a>
+</td>
 
 </tr>
-
 <% end %>
 
 </table>

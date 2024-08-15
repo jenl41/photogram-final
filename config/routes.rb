@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   # READ
   get("/users", { :controller => "users", :action => "index" })
   
-  get("/users/:path_id", { :controller => "users", :action => "show" })
+  get("/users/:path_username", { :controller => "users", :action => "show" })
   
   # UPDATE
   
