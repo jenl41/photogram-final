@@ -11,17 +11,19 @@
         <%= @the_user.private %>
       </dd>
 
-  <dt>Followers</dt>
- <%= @followers_count %>
+
+<dt>Followers</dt>
+<dd><%= @the_user.followers.count %></dd>
 
 <dt>Following</dt>
-
+<dd><%= @the_user.leaders.count %></dd>
+    
     <dl>
       <dt>
         Comments count
       </dt>
       <dd>
-        <%= @comments_count %>
+        <%= @the_photo %>
       </dd>
 
       <dt>
