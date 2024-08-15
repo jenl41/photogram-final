@@ -7,6 +7,20 @@
 </div>
 
 
+<form action="/insert_photo" method="post">
+  <label for="image_box">Image</label>
+  <input id="image_box" type="text" name="query_image" placeholder="Enter a URL for the image...">
+
+  <label for="caption_box">Caption</label>
+  <textarea id="caption_box" name="query_caption" placeholder="Enter a caption for the photo..."></textarea>
+
+  <label for="owner_id_box">Owner ID</label>
+  <input id="owner_id_box" type="text" name="query_owner_id" placeholder="Enter an ID of a User" value="<%= current_user.id %>">
+
+  <button>Add photo</button>
+</form>
+
+
 <div>
   <div>
     <table border="1">

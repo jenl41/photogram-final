@@ -15,6 +15,18 @@ class Photo < ApplicationRecord
   validates(:poster, { :presence => true })
   belongs_to(:poster, class_name: "User", foreign_key: "owner_id")
 
+  def poster
+    my_owner_id = self.owner_id
+
+    matching_users = User.where({ :id => my_owner_id })
+
+    the_user = matching_users.at(0)
+
+    return the_user
+  end
+
+  
+
   # Photo#comments: returns rows from the comments table associated to this photo by the photo_id column
   has_many(:comments, class_name: "Comment", foreign_key: "photo_id")
 

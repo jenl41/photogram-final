@@ -13,11 +13,11 @@ class UsersController < ApplicationController
     matching_usernames = User.where({ :username => url_username})
     @the_user = matching_usernames.first
   
-    #if @the_user == nil
-     # redirect_to("/")
-   # else
-   # render ({:template => "user_templates/details"})
-   # end
+    if @the_user == nil
+      redirect_to("/")
+    else
+    render ({:template => "users/show"})
+    end
   end
 
   def create
@@ -61,13 +61,13 @@ class UsersController < ApplicationController
     redirect_to("/users", { :notice => "User deleted successfully."} )
   end
 
-  def feed
-    the_username = params.fetch("user_name")
-    matching_users = User.where({ :username => the_username})
+  #def feed
+    #the_username = params.fetch("user_name")
+   # matching_users = User.where({ :username => the_username})
 
 
-    render({ :template => "users/feed" })
+   # render({ :template => "users/#{the_user.id/feed" })
 
-  end
+ # end
 
 end
