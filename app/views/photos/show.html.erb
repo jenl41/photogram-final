@@ -92,6 +92,23 @@
 <th>Posted</th>
 </tr>
 
+ <% @the_photo.comments.each do |comment| %>
+  <tr>
+    <td>
+      <%= comment.commenter.username %>
+    </td>
+
+    <td>
+      <%= comment.body %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(comment.created_at)%>
+    </td>
+  </tr>
+
+  <% end %>
+
 </table>
 
 <h2>Add a new comment</h2>
