@@ -35,21 +35,31 @@
         <td>
               <%= human_boolean(a_user.private) %>
         </td>
-<td></td>
 
-<% if current_user != nil %>
-          <td>
-          <a href="/users/<%= a_user.username %>">
-            Show details
-          </a>
-         </td>
-  <% else %>
-   <td>
-          <a href="/users/sign_in">
-            Show details
-          </a>
-        </td>
-<% end %>
+<td>
+        <% if a_user.private %>
+          <!-- Leave blank for private users -->
+        <% elsif current_user %>
+          <% if current_user.following?(a_user) %>
+            <%= button_to "Unfollow", unfollow_user_path(a_user), method: :delete, class: "btn btn-danger btn-sm" %>
+          <% else %>
+            <%= button_to "Follow", follow_user_path(a_user), method: :post, class: "btn btn-primary btn-sm" %>
+          <% end %>
+        <% else %>
+          Sign in to follow
+        <% end %>
+      </td>
+
+
+<td>
+        <% if a_user.private %>
+          <%= link_to "Show details", users_path, onclick: "alert('You\'re not authorized'); return false;" %>
+        <% elsif current_user %>
+          <%= link_to "Show details", "/users/#{a_user.username}" %>
+        <% else %>
+          <%= link_to "Show details", "/users/sign_in" %>
+        <% end %>
+      </td>
 
        
       </tr>

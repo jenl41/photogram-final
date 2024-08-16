@@ -25,12 +25,16 @@ class FollowRequestsController < ApplicationController
 
     if the_follow_request.valid?
       the_follow_request.save
-      redirect_to("/follow_requests", { :notice => "Follow request created successfully." })
+      
+      # Fetch the username of the recipient for the redirect
+      recipient = User.find(the_follow_request.recipient_id)
+      
+      redirect_to("/users/#{recipient.username}", { :notice => "Follow request created successfully." })
     else
       redirect_to("/follow_requests", { :alert => the_follow_request.errors.full_messages.to_sentence })
     end
   end
-
+  
   def update
     the_id = params.fetch("path_id")
     the_follow_request = FollowRequest.where({ :id => the_id }).at(0)

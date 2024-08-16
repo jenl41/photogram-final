@@ -1,6 +1,6 @@
 <div>
   <div>
-  <%= params %>
+
     <h1>
 <%= @the_user.username %></h1> 
 
@@ -111,8 +111,8 @@
 <hr>
 
       <li>
-      <a href="/users">Profile</a>
-      </li>
+  <a href="/users/<%= current_user.username %>">Profile</a>
+</li>
 
       <li><a href="/photos">
           Liked Photos

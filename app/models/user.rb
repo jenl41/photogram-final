@@ -71,15 +71,20 @@ class User < ApplicationRecord
   ### Indirect associations built on scoped associations
 
   # User#followers: returns rows from the users table associated to this user through its accepted_received_follow_requests (the follow requests' senders)
- # has_many(:followers, through: :accepted_received_follow_requests, source: :sender)
+  has_many(:followers, through: :accepted_received_follow_requests, source: :sender)
 
- has_many :received_follow_requests, class_name: "FollowRequest", foreign_key: "recipient_id"
- 
- def followers
-  User.where(id: received_follow_requests.pluck(:sender_id))
-end
+  def following?(other_user)
+    sent_follow_requests.where(recipient_id: other_user.id, status: "accepted").exists?
+  end
 
- has_many :followers, through: :received_follow_requests, source: :sender
+  def follow(other_user)
+    sent_follow_requests.create(recipient: other_user, status: "accepted") unless self == other_user
+  end
+
+  def unfollow(other_user)
+    sent_follow_requests.find_by(recipient: other_user)&.destroy
+  end
+
 
   # User#leaders: returns rows from the users table associated to this user through its accepted_sent_follow_requests (the follow requests' recipients)
   has_many(:leaders, through: :accepted_sent_follow_requests, source: :recipient)
@@ -87,26 +92,13 @@ end
   # User#feed: returns rows from the photos table associated to this user through its leaders (the leaders' own_photos)
   has_many(:feed, through: :leaders, source: :own_photos)
 
+  def feed
+    Photo.where(owner: leaders).or(Photo.where(owner: self)).order(created_at: :desc)
+  end
+
   # User#discover: returns rows from the photos table associated to this user through its leaders (the leaders' liked_photos)
 
   has_many(:discover, through: :leaders, source: :liked_photos)
 
-   # This access the Relationship object.
-   has_many :followed_users,
-   foreign_key: :follower_id,
-   class_name: 'Relationship',
-   dependent: :destroy
-
-# This accesses the user through the relationship object.
-has_many :followees, through: :followed_users, dependent: :destroy
-
-  # This access the Relationship object.
-  has_many :following_users,
-           foreign_key: :followee_id,
-           class_name: 'Relationship',
-           dependent: :destroy
-
-  # This accesses the user through the relationship object.
-  has_many :followers, through: :following_users, dependent: :destroy
-
+   
 end

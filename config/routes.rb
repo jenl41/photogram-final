@@ -4,7 +4,16 @@ Rails.application.routes.draw do
          root to: "users#index"
          #get("/users", { :controller => "users", :action => "index" })
 
-
+      
+  
+         resources :users, only: [:index, :show] do
+           member do
+             post 'follow', to: 'follow_requests#create'
+             delete 'unfollow', to: 'follow_requests#destroy'
+           end
+          end
+       
+          get '/users/:path_username', to: 'users#show'
 
   # Routes for the Like resource:
 
@@ -41,6 +50,9 @@ Rails.application.routes.draw do
   
   # DELETE
   get("/delete_follow_request/:path_id", { :controller => "follow_requests", :action => "destroy" })
+
+  resources :follow_requests, only: [:create, :destroy]
+
 
   #------------------------------
 

@@ -60,10 +60,10 @@
 </div>
 
 <dt>
-    Edit photo
+    Edit photo 
   </dt>
   <dd>
-    <form action="/update_photo/<%= @the_photo.id %>" method="post">
+    <form action="/modify_photo/<%= @the_photo.id %>" method="post">
       <label for="browser_image">Image</label>
       <input id="browser_image" type="text" name="query_image" placeholder="Enter a URL for the image..." value=<%= @the_photo.image %>
       <label for="browser_caption">Caption</label>
